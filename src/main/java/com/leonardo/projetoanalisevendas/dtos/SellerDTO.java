@@ -32,6 +32,7 @@ public class SellerDTO {
     @Positive(message = "Age must be greater than 0")
     private Integer age;
 
+    
     @NotBlank(message = "Required field")
     private String gender;
 
