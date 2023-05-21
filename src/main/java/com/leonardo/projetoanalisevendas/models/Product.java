@@ -26,6 +26,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "tb_products")
 public class Product {
+
+    private static final long serialVersionUID = 1L;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
