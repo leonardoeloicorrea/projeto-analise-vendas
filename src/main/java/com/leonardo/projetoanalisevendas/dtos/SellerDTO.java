@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.leonardo.projetoanalisevendas.enums.Gender;
+import com.leonardo.projetoanalisevendas.models.Seller;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,12 +29,9 @@ public class SellerDTO {
     @NotBlank
     private String name;
 
-    @Size(max = 3, message = "Age must be between 1 and 3 characters")
-    @NotNull(message = "Required field")
     @Positive(message = "Age must be greater than 0")
     private Integer age;
 
-    
     @NotBlank(message = "Required field")
     private String gender;
 
@@ -58,7 +57,48 @@ public class SellerDTO {
     private LocalDate hiringDate;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    @NotNull(message = "Required field")
-    private LocalDateTime updateDate;
+    private LocalDateTime lastUpdate;
     
+    public SellerDTO(Seller entity) {
+        id = entity.getId();
+        name = entity.getName();
+        dateOfBirth = entity.getDateOfBirth();
+        LocalDate currentDate = LocalDate.now();
+        age = LocalDate.now().getYear() - entity.getDateOfBirth().getYear();
+        if(dateOfBirth.getMonthValue() > currentDate.getMonthValue()  || (dateOfBirth.getMonthValue() == currentDate.getMonthValue() && dateOfBirth.getDayOfMonth() > currentDate.getDayOfMonth())){
+            age -= 1;
+        }
+        gender = entity.getGender().toString();
+        cpf = entity.getCpf();
+        phoneNumber = entity.getPhoneNumber();
+        email = entity.getEmail();
+        hiringDate = entity.getHiringDate();
+        lastUpdate = entity.getLastUpdate();
+    }
+
+    public Seller convertDtoToEntity (SellerDTO sellerDTO) {
+        Seller entity = new Seller();
+        entity.setName(sellerDTO.getName());
+        entity.setGender(sellerDTO.gender.equalsIgnoreCase("MASCULINE") ? Gender.MASCULINE : Gender.FEMININE);
+        entity.setCpf(sellerDTO.getCpf());
+        entity.setPhoneNumber(sellerDTO.getPhoneNumber());
+        entity.setEmail(sellerDTO.getEmail());
+        entity.setDateOfBirth(sellerDTO.getDateOfBirth());
+        entity.setHiringDate(sellerDTO.getHiringDate());
+
+        return entity;
+    }
+
+    public Seller updateEntity (Seller entity, SellerDTO sellerDTO) {
+        entity.setName(sellerDTO.getName());
+        entity.setGender(sellerDTO.gender.equalsIgnoreCase("MASCULINE") ? Gender.MASCULINE : Gender.FEMININE);
+        entity.setCpf(sellerDTO.getCpf());
+        entity.setPhoneNumber(sellerDTO.getPhoneNumber());
+        entity.setEmail(sellerDTO.getEmail());
+        entity.setDateOfBirth(sellerDTO.getDateOfBirth());
+        entity.setHiringDate(sellerDTO.getHiringDate());
+
+        return entity;
+    }
+
 }

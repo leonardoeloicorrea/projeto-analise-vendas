@@ -63,5 +63,5 @@ public class Seller {
 
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    private LocalDateTime updateDate;
+    private LocalDateTime lastUpdate;
 }
