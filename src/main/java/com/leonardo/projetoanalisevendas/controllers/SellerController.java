@@ -26,34 +26,34 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping(value = "/sellers")
 public class SellerController {
-    
+
     @Autowired
     private SellerService sellerService;
 
     @GetMapping
-    public ResponseEntity<Page<SellerDTO>> findAllSellers(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable){
+    public ResponseEntity<Page<SellerDTO>> findAllSellers(
+            @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
         return ResponseEntity.status(HttpStatus.OK).body(sellerService.findAllSellers(pageable));
     }
 
     @GetMapping(value = "{id}")
-    public ResponseEntity<SellerDTO> findSellerById(@PathVariable Long id){
+    public ResponseEntity<SellerDTO> findSellerById(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(sellerService.findSellerById(id));
     }
 
     @PostMapping
-    public ResponseEntity<SellerDTO> insertSeller(@RequestBody @Valid SellerDTO sellerDTO){
-            return ResponseEntity.status(HttpStatus.CREATED).body(sellerService.insertSeller(sellerDTO));
+    public ResponseEntity<SellerDTO> insertSeller(@RequestBody @Valid SellerDTO sellerDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(sellerService.insertSeller(sellerDTO));
     }
 
     @PutMapping(value = "{id}")
-    public ResponseEntity<SellerDTO> updateSeller(@PathVariable Long id, @RequestBody SellerDTO sellerDTO){
+    public ResponseEntity<SellerDTO> updateSeller(@PathVariable Long id, @RequestBody SellerDTO sellerDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(sellerService.updateSeller(id, sellerDTO));
     }
 
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Object> deleteSeller(@PathVariable Long id) {
-            sellerService.deleteSeller(id);
-            return ResponseEntity.status(HttpStatus.OK).body("Seller removed successfully");
-
+        sellerService.deleteSeller(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Seller removed successfully");
     }
 }

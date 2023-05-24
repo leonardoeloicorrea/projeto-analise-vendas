@@ -2,10 +2,10 @@ package com.leonardo.projetoanalisevendas.models;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Locale.Category;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.leonardo.projetoanalisevendas.enums.Category;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,7 +33,7 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(nullable = false, length = 200, unique = true)
+    @Column(nullable = false, length = 200)
     private String name;
 
     @Column(nullable = false)
@@ -55,5 +55,5 @@ public class Product {
 
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
-    private LocalDateTime updateDate;
+    private LocalDateTime lastUpdate;
 }

@@ -13,7 +13,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long>{
     @Query("SELECT obj "
     + "FROM Seller obj "
     + "WHERE obj.id = :id")
-    Page<Seller> buscarUsuarioPorid(@Param("id") String id, Pageable Pageable);
+    Page<Seller> findSellerById(@Param("id") String id, Pageable Pageable);
 
     boolean existsByCpf(String cpf);
     boolean existsByEmail(String email);
