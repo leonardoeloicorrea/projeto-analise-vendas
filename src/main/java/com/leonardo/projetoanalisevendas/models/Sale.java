@@ -28,7 +28,7 @@ public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime dateOfSale;
@@ -39,18 +39,12 @@ public class Sale {
     @Column(nullable = false)
     private Integer quantity;
 
-    @Column(nullable = false)
-    private Long saleSellerId;
-
-    @Column(nullable = false)
-    private String saleSellerName;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
-    @JoinColumn(name = "seller_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "seller_id")
     private Seller seller;
 
 }

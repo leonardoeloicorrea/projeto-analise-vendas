@@ -25,8 +25,7 @@ public class ProductService {
     }
 
     public ProductDTO findProductById(Long id) {
-        Product entity = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product entity = findEntity(id);
         return new ProductDTO(entity);
     }
 
@@ -44,8 +43,7 @@ public class ProductService {
     }
 
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
-        Product entity = productRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
+        Product entity = findEntity(id);
         entity = productDTO.updateEntity(entity, productDTO);
         entity.setLastUpdate(LocalDateTime.now(ZoneId.of("UTC")));
         productRepository.save(entity);
@@ -53,8 +51,13 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        findProductById(id);
+        findEntity(id);
         productRepository.deleteById(id);
+    }
+    
+    protected Product findEntity(Long id) {
+        return productRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
     }
 
 }

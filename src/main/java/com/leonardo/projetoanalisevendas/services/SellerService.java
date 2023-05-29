@@ -25,7 +25,7 @@ public class SellerService {
     }
     
     public SellerDTO findSellerById(Long id) {
-        Seller entity = sellerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
+        Seller entity = findEntity(id);
         return new SellerDTO(entity);
     }
 
@@ -42,15 +42,19 @@ public class SellerService {
 
     public SellerDTO updateSeller(Long id, SellerDTO sellerDTO) {
         validateUniqueData(sellerDTO);
-        Seller entity = sellerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
+        Seller entity = findEntity(id);
         entity = sellerDTO.updateEntity(entity, sellerDTO);
         sellerRepository.save(entity);
         return new SellerDTO(entity);
     }
 
     public void deleteSeller(Long id) {
-        findSellerById(id);
+        findEntity(id);
         sellerRepository.deleteById(id);
+    }
+
+    protected Seller findEntity(Long id) {
+        return sellerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Seller not found"));
     }
 
     private void validateUniqueData(SellerDTO sellerDTO) {

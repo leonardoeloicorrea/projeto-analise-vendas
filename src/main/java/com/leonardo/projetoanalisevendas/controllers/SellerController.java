@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.leonardo.projetoanalisevendas.dtos.SellerDTO;
 import com.leonardo.projetoanalisevendas.services.SellerService;
-import com.leonardo.projetoanalisevendas.services.exceptions.DatabaseException;
-import com.leonardo.projetoanalisevendas.services.exceptions.ResourceNotFoundException;
 
 import jakarta.validation.Valid;
 
@@ -56,4 +54,4 @@ public class SellerController {
         sellerService.deleteSeller(id);
         return ResponseEntity.status(HttpStatus.OK).body("Seller removed successfully");
     }
-}
+} 

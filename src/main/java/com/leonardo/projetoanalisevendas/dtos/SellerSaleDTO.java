@@ -22,6 +22,6 @@ public class SellerSaleDTO {
     private Integer totalAmountOfSales;
 
     @NotNull(message = "Required field")
-    private Integer averageDailySales;
+    private Double averageDailySales;
 
 }

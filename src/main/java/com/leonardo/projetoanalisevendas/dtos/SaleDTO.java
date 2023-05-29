@@ -1,13 +1,13 @@
 package com.leonardo.projetoanalisevendas.dtos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.leonardo.projetoanalisevendas.models.Sale;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,31 +15,38 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaleDTO {
+public class SaleDTO implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
     private Long id;
-
+    
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime dateOfSale;
 
-    @NotBlank(message = "Required field")
+    @NotNull(message = "Required field")
     private Long productId;
 
     @NotNull(message = "Required field")
     @Positive(message = "Quantity must be greater than 0")
     private Integer quantity;
 
-    @NotNull(message = "Required field")
     @Positive(message = "Total value must be greater than 0")
     private Double totalValue;
 
     @NotNull(message = "Required field")
-    private Long saleSellerId;
+    private Long sellerId;
 
-    @Size(min = 3, max = 100, message = "Name must be between 3 and 100 characters")
-    @NotBlank(message = "Required field")
-    private String saleSellerName;
+    private String sellerName;
+
+    public SaleDTO(Sale entity) {
+        id = entity.getId();
+        dateOfSale = entity.getDateOfSale();
+        productId = entity.getProduct().getId();
+        quantity = entity.getQuantity();
+        totalValue = entity.getTotalValue();
+        sellerId = entity.getSeller().getId();
+        sellerName = entity.getSeller().getName();
+    }
 
 }
